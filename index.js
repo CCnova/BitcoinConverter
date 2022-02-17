@@ -10,21 +10,14 @@ function updateBitcoinValueP({ nodeReference, weight, bitcoinCotation }) {
   nodeReference.textContent = weight * bitcoinPerCurrencyUnit;
 }
 
-(async () => {
+async function run() {
+  console.log('runned');
   const bitcoinBuyValueP = document.getElementById("bitcoin_buy__value");
   const currencyValueInput = document.getElementById("currency_value");
-  // const select = document.getElementById("currency_select");
 
   // Get bitcoin data
   const { data } = await axios.get(API_URL);
-  // const currencyNames = Object.keys(data);
-
-  // currencyNames.forEach((currency) => {
-  //   const option = document.createElement("option");
-  //   option.textContent = currency;
-  //   select.appendChild(option);
-  // });
-
+  console.log({data: data.BRL});
   updateCurrencyValue({
     nodeReference: currencyValueInput,
     newValue: 1,
@@ -35,15 +28,6 @@ function updateBitcoinValueP({ nodeReference, weight, bitcoinCotation }) {
     bitcoinCotation: data.BRL.buy,
   });
 
-  // select.addEventListener('change', event => {
-  //   updateBitcoinValueP({
-  //     nodeReference: bitcoinBuyValueP,
-  //     base: currencyValueInput.value,
-  //     newValue: data[event.target.value].buy,
-  //   })
-  // }
-  // );
-
   currencyValueInput.addEventListener('input', event => {
     const typedValue = parseFloat(event.target.value);
     const weight = isNaN(typedValue) ? 0 : typedValue;
@@ -52,5 +36,7 @@ function updateBitcoinValueP({ nodeReference, weight, bitcoinCotation }) {
      weight,
      bitcoinCotation: data.BRL.buy
    });
-  })
-})();
+  });
+}
+
+window.setInterval(run, 10000);
