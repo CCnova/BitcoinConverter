@@ -11,13 +11,12 @@ function updateBitcoinValueP({ nodeReference, weight, bitcoinCotation }) {
 }
 
 async function run() {
-  console.log('runned');
   const bitcoinBuyValueP = document.getElementById("bitcoin_buy__value");
   const currencyValueInput = document.getElementById("currency_value");
 
   // Get bitcoin data
   const { data } = await axios.get(API_URL);
-  console.log({data: data.BRL});
+
   updateCurrencyValue({
     nodeReference: currencyValueInput,
     newValue: 1,
@@ -38,5 +37,7 @@ async function run() {
    });
   });
 }
+
+run();
 
 window.setInterval(run, 10000);
